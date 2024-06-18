@@ -2,8 +2,8 @@ from sqlalchemy.orm import Session
 from backend.models.category import Category
 from backend.schemas.category import CategoryCreate
 
-def get_category(db: Session, category_title: str):
-    return db.query(Category).filter(Category.title == category_title).first()
+def get_category(db: Session, category_slug: str):
+    return db.query(Category).filter(Category.slug == category_slug).first()
 
 def get_categories(db: Session, skip: int = 0, limit: int = 10):
     return db.query(Category).offset(skip).limit(limit).all()

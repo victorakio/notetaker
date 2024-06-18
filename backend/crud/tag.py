@@ -2,8 +2,8 @@ from sqlalchemy.orm import Session
 from backend.models.tag import Tag
 from backend.schemas.tag import TagCreate
 
-def get_tag(db: Session, tag_title: str):
-    return db.query(Tag).filter(Tag.title == tag_title).first()
+def get_tag(db: Session, tag_slug: str):
+    return db.query(Tag).filter(Tag.slug == tag_slug).first()
 
 def get_tags(db: Session, skip: int = 0, limit: int = 10):
     return db.query(Tag).offset(skip).limit(limit).all()

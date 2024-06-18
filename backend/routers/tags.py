@@ -13,9 +13,9 @@ def create_tag_route(tag: TagCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Tag already registered")
     return create_tag(db=db, tag=tag)
 
-@router.get("/tags/{tag_title}", response_model=Tag)  # Changed the path parameter name
-def get_tag_route(tag_title: str, db: Session = Depends(get_db)):
-    db_tag = get_tag(db, tag_title=tag_title)
+@router.get("/tags/{tag_slug}", response_model=Tag)  # Changed the path parameter name
+def get_tag_route(tag_slug: str, db: Session = Depends(get_db)):
+    db_tag = get_tag(db, tag_slug=tag_slug)
     if db_tag is None:
         raise HTTPException(status_code=404, detail="Tag not found")
     return db_tag

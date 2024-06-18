@@ -13,9 +13,9 @@ def create_category_route(category: CategoryCreate, db: Session = Depends(get_db
         raise HTTPException(status_code=400, detail="Category already registered")
     return create_category(db=db, category=category)
 
-@router.get("/categories/{category_title}", response_model=Category)
-def get_category_route(category_title: str, db: Session = Depends(get_db)):
-    db_category = get_category(db, category_title=category_title)
+@router.get("/categories/{category_slug}", response_model=Category)
+def get_category_route(category_slug: str, db: Session = Depends(get_db)):
+    db_category = get_category(db, category_slug=category_slug)
     if db_category is None:
         raise HTTPException(status_code=404, detail="Category not found")
     return db_category
