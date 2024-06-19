@@ -5,8 +5,8 @@ class UserBase(BaseModel):
     email: str
 
 class UserCreate(UserBase):
-    pass
-
+    password: str
+    
 class User(UserBase):
     id: int
 

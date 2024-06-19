@@ -3,12 +3,14 @@ from sqlalchemy.orm import Session
 from backend.schemas.tag import Tag, TagCreate
 from backend.crud.tag import get_tag, create_tag, get_tags
 from backend.database import get_db
+from backend.utils.auth import get_current_user
+from backend.schemas.user import User
 
 router = APIRouter()
 
 @router.post("/tags/", response_model=Tag)
-def create_tag_route(tag: TagCreate, db: Session = Depends(get_db)):
-    db_tag = get_tag(db, tag_title=tag.title)
+def create_tag_route(tag: TagCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    db_tag = get_tag(db, tag_slug=tag.title)
     if db_tag:
         raise HTTPException(status_code=400, detail="Tag already registered")
     return create_tag(db=db, tag=tag)

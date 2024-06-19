@@ -3,12 +3,18 @@ from sqlalchemy.orm import Session
 from backend.schemas.category import Category, CategoryCreate
 from backend.crud.category import get_category, create_category, get_categories
 from backend.database import get_db
+from backend.utils.auth import get_current_user
+from backend.schemas.user import User
 
 router = APIRouter()
 
 @router.post("/categories/", response_model=Category)
-def create_category_route(category: CategoryCreate, db: Session = Depends(get_db)):
-    db_category = get_category(db, category_title=category.title)
+def create_category_route(
+    category: CategoryCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)  # Ensure get_current_user is imported correctly
+):
+    db_category = get_category(db, category_slug=category.title)
     if db_category:
         raise HTTPException(status_code=400, detail="Category already registered")
     return create_category(db=db, category=category)

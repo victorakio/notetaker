@@ -8,11 +8,13 @@ from backend.models.tag import Tag as TagModel
 from backend.database import get_db
 from backend.schemas.category import Category
 from typing import Optional
+from backend.utils.auth import get_current_user
+from backend.schemas.user import User
 
 router = APIRouter()
 
 @router.post("/notes/", response_model=Note)
-def create_note_route(note: NoteCreate, db: Session = Depends(get_db)):
+def create_note_route(note: NoteCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     db_note = get_note(db, note_slug=note.slug)
     if db_note:
         raise HTTPException(status_code=400, detail="Note already registered")

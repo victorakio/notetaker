@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.routers import users, tags, categories, notes
+from backend.routers import users, tags, categories, notes, auth
 from backend.database import Base, engine, SessionLocal
 from backend.models import User, Note, Tag, Category, Note
 
@@ -40,3 +40,4 @@ app.include_router(users.router)
 app.include_router(tags.router)
 app.include_router(categories.router)
 app.include_router(notes.router)
+app.include_router(auth.router)
